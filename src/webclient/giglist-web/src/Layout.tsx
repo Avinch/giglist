@@ -11,10 +11,6 @@ type Props = {
 function Layout(props: Props) {
   const { isAuthenticated, user } = useAuth0();
 
-  if (user) {
-    console.log(user);
-  }
-
   return (
     <>
       <Navbar>

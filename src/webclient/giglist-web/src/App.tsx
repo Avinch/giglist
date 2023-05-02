@@ -15,6 +15,7 @@ function App() {
         clientId="f8S2PHnPB8EqMBkDKYlrIPOMXFjXqkR4" // todo: config this
         authorizationParams={{
           redirect_uri: window.location.origin,
+          audience: "https://api.giglist.sjas.uk",
         }}
         cacheLocation="localstorage"
       >

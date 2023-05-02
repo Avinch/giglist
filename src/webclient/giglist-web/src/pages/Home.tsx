@@ -1,5 +1,7 @@
+import ForecastList from "../components/forecast/ForecastList";
+
 function Home() {
-  return <div>lorem ipsum</div>;
+  return <ForecastList />;
 }
 
 export default Home;
