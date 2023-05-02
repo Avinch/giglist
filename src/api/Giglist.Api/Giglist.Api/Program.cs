@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using Giglist.Api.Extensions;
+using Giglist.Api.Queries;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -20,6 +22,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+});
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
@@ -29,6 +36,11 @@ builder.Services.AddCors(options =>
             .SetIsOriginAllowed((host) => true)
             .AllowAnyHeader());
 });
+
+builder.Services.AddAuthorizationBuilder().AddAuthPolicies();
+
+builder.Services.AddRepositories();
+builder.Services.AddMappers();
 
 var app = builder.Build();
 
@@ -46,5 +58,7 @@ app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+app.AddEventEndpoints();
 
 app.Run();

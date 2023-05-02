@@ -1,11 +1,11 @@
 import axios from "axios";
-import GetForecastResult from "../models/responses/GetForecastResult";
+import EventDto from "../models/IEventDto";
 
-class AuthTestService {
+class EventService {
   baseUrl: string = "https://localhost:7052";
 
-  async getWeather(authToken: string): Promise<GetForecastResult | undefined> {
-    return await this.get<GetForecastResult>("WeatherForecast", authToken);
+  async getEvents(authToken: string): Promise<EventDto[] | undefined> {
+    return await this.get<EventDto[]>("events", authToken);
   }
 
   async get<T>(endpoint: string, token: string) {
@@ -24,4 +24,4 @@ class AuthTestService {
   }
 }
 
-export default AuthTestService;
+export default EventService;

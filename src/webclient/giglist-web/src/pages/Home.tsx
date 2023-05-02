@@ -1,7 +1,7 @@
-import ForecastList from "../components/forecast/ForecastList";
+import EventList from "../components/event/EventList";
 
 function Home() {
-  return <ForecastList />;
+  return <EventList />;
 }
 
 export default Home;
