@@ -11,7 +11,8 @@ public class EventToDtoMapper : IEventToDtoMapper
         {
             Id = input.Id,
             Name = input.Name,
-            Start = input.StartDate
+            Start = input.StartDate,
+            Subtitle = input.Subtitle
         };
     }
 }

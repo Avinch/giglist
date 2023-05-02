@@ -2,6 +2,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
 import EventService from "../../services/EventService";
 import EventDto from "../../models/IEventDto";
+import EventCard from "./EventCard";
+import { Grid } from "@nextui-org/react";
 
 function EventList() {
   const service = new EventService();
@@ -23,13 +25,16 @@ function EventList() {
   if (data) {
     console.log(data);
     return (
-      <ul>
-        {(data as EventDto[]).map((item) => (
-          <li>
-            {item.id} | {item.name}
-          </li>
-        ))}
-      </ul>
+      <>
+        <Grid.Container gap={2}>
+          {(data as EventDto[]).map((item) => (
+            <Grid sm={3}>
+              <EventCard event={item} />
+            </Grid>
+          ))}
+        </Grid.Container>
+        <ul></ul>
+      </>
     );
   }
 

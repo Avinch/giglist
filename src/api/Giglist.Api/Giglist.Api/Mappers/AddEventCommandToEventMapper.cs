@@ -11,7 +11,8 @@ public class AddEventCommandToEventMapper : IAddEventCommandToEventMapper
         return new Event()
         {
             Name = input.Name,
-            StartDate = input.Start
+            StartDate = input.Start,
+            Subtitle = input.Subtitle
         };
     }
 }
