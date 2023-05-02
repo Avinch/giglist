@@ -8,6 +8,10 @@ class EventService {
     return await this.get<EventDto[]>("events", authToken);
   }
 
+  async getEvent(authToken: string, id: string): Promise<EventDto | undefined> {
+    return await this.get<EventDto>(`event/${id}`, authToken);
+  }
+
   async get<T>(endpoint: string, token: string) {
     try {
       const { data, status } = await axios.get<T>(

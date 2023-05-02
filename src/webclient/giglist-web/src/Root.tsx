@@ -1,21 +1,23 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Button, Navbar, User } from "@nextui-org/react";
+import { Button, Navbar, User, Text } from "@nextui-org/react";
 import LoginButton from "./components/auth/LoginButton";
 import { useEffect } from "react";
 import Profile from "./components/auth/Profile";
+import { Outlet } from "react-router";
+import { Link } from "react-router-dom";
 
-type Props = {
-  children: JSX.Element;
-};
-
-function Layout(props: Props) {
+export default function Root() {
   const { isAuthenticated, user } = useAuth0();
 
   return (
     <>
       <Navbar>
         <Navbar.Brand>
-          <h3>Giglist</h3>
+          <Link to="/">
+            <Text b color="black" hideIn="xs">
+              Giglist
+            </Text>
+          </Link>
         </Navbar.Brand>
         <Navbar.Content>
           <Navbar.Item>
@@ -23,9 +25,7 @@ function Layout(props: Props) {
           </Navbar.Item>
         </Navbar.Content>
       </Navbar>
-      <div>{props.children}</div>
+      <Outlet />
     </>
   );
 }
-
-export default Layout;

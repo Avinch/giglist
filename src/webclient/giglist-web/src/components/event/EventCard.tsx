@@ -1,5 +1,6 @@
 import { Card, Col, Row, Button, Text } from "@nextui-org/react";
 import IEventDto from "../../models/IEventDto";
+import { Link } from "react-router-dom";
 
 interface EventCardProps {
   event: IEventDto;
@@ -46,16 +47,18 @@ export default function EventCard(props: EventCardProps) {
           </Col>
           <Col>
             <Row justify="flex-end">
-              <Button flat auto rounded color="secondary">
-                <Text
-                  css={{ color: "inherit" }}
-                  size={12}
-                  weight="bold"
-                  transform="uppercase"
-                >
-                  go
-                </Text>
-              </Button>
+              <Link to={`/event/${props.event.id}`}>
+                <Button flat auto rounded color="secondary">
+                  <Text
+                    css={{ color: "inherit" }}
+                    size={12}
+                    weight="bold"
+                    transform="uppercase"
+                  >
+                    go
+                  </Text>
+                </Button>
+              </Link>
             </Row>
           </Col>
         </Row>
