@@ -1,5 +1,7 @@
+import EventList from "../components/event/EventList";
+
 function Home() {
-  return <div>lorem ipsum</div>;
+  return <EventList />;
 }
 
 export default Home;
