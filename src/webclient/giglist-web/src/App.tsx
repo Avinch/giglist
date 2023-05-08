@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import Home from "./pages/Home";
+import Events from "./pages/Home";
 import Root from "./Root";
 import { Auth0Provider } from "@auth0/auth0-react";
 import AuthenticationWrapper from "./Providers/Auth0Wrapper";

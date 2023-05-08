@@ -8,7 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./Root";
 import { Auth0Provider } from "@auth0/auth0-react";
 import AuthenticationWrapper from "./Providers/Auth0Wrapper";
-import Home from "./pages/Home";
+import Events from "./pages/Home";
 import EventPage from "./pages/EventPage";
 import NewEventPage from "./pages/NewEventPage";
 import { MantineProvider } from "@mantine/core";
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <Events />,
       },
       {
         path: "/event/:eventId",

@@ -2,7 +2,7 @@
 
 public class VenueDto
 {
-    public Guid Id { get; set; }
+    public Guid VenueId { get; set; }
     public string Name { get; set; }
     public string City { get; set; }
 }

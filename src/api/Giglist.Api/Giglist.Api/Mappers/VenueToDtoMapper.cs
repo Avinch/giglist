@@ -9,7 +9,7 @@ public class VenueToDtoMapper : IVenueToDtoMapper
     {
         return new VenueDto()
         {
-            Id = input.Id,
+            VenueId = input.Id,
             Name = input.Name,
             City = input.City
         };
