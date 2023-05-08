@@ -6,11 +6,12 @@ import reportWebVitals from "./reportWebVitals";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./Root";
-import { NextUIProvider } from "@nextui-org/react";
 import { Auth0Provider } from "@auth0/auth0-react";
 import AuthenticationWrapper from "./Providers/Auth0Wrapper";
 import Home from "./pages/Home";
 import EventPage from "./pages/EventPage";
+import NewEventPage from "./pages/NewEventPage";
+import { MantineProvider } from "@mantine/core";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -29,13 +30,23 @@ const router = createBrowserRouter([
         path: "/event/:eventId",
         element: <EventPage />,
       },
+      {
+        path: "/event/new",
+        element: <NewEventPage />,
+      },
     ],
   },
 ]);
 
 root.render(
   <React.StrictMode>
-    <NextUIProvider>
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      theme={{
+        colorScheme: "dark",
+      }}
+    >
       <Auth0Provider
         domain="dev-zjdnezr9.us.auth0.com"
         clientId="f8S2PHnPB8EqMBkDKYlrIPOMXFjXqkR4" // todo: config this
@@ -49,7 +60,7 @@ root.render(
           <RouterProvider router={router} />
         </AuthenticationWrapper>
       </Auth0Provider>
-    </NextUIProvider>
+    </MantineProvider>
   </React.StrictMode>
 );
 

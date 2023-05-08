@@ -1,18 +1,13 @@
-import { Card, Col, Row, Button, Text, Container } from "@nextui-org/react";
 import EventList from "../components/event/EventList";
 
 function Home() {
   return (
-    <Container>
-      <Text size={25} weight="bold">
-        Upcoming Events
-      </Text>
+    <div>
+      <h1>Upcoming Events</h1>
       <EventList />
-      <Text size={25} weight="bold">
-        Previous Events
-      </Text>
+      <h1>Upcoming Events</h1>
       <EventList />
-    </Container>
+    </div>
   );
 }
 

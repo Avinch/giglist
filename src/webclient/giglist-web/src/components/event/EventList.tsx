@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import EventService from "../../services/EventService";
 import EventDto from "../../models/IEventDto";
 import EventCard from "./EventCard";
-import { Grid } from "@nextui-org/react";
+import { SimpleGrid } from "@mantine/core";
 
-function EventList() {
+export default function EventList() {
   const service = new EventService();
   const { getAccessTokenSilently } = useAuth0();
 
@@ -26,19 +26,14 @@ function EventList() {
     console.log(data);
     return (
       <>
-        <Grid.Container gap={2}>
+        <SimpleGrid cols={5} spacing={"xl"}>
           {(data as EventDto[]).map((item) => (
-            <Grid sm={3}>
-              <EventCard event={item} />
-            </Grid>
+            <EventCard event={item} />
           ))}
-        </Grid.Container>
-        <ul></ul>
+        </SimpleGrid>
       </>
     );
   }
 
   return null;
 }
-
-export default EventList;

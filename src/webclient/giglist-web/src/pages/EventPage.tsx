@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import EventDto from "../models/IEventDto";
 import { useAuth0 } from "@auth0/auth0-react";
 import EventService from "../services/EventService";
-import { Container, Loading } from "@nextui-org/react";
+import { LoadingOverlay } from "@mantine/core";
 
 export default function EventPage() {
   const [event, setEvent] = useState<EventDto>();
@@ -26,15 +26,11 @@ export default function EventPage() {
   }, []);
 
   if (loading) {
-    return (
-      <Container>
-        <Loading />
-      </Container>
-    );
+    return <LoadingOverlay visible={true} overlayBlur={2} />;
   }
 
   return (
-    <Container gap={15}>
+    <div>
       {event ? (
         <h3>
           {event.name} {event.subtitle && <>({event.subtitle})</>}
@@ -42,6 +38,6 @@ export default function EventPage() {
       ) : (
         <h3>Error</h3>
       )}
-    </Container>
+    </div>
   );
 }
