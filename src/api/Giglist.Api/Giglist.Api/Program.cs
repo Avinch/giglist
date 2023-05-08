@@ -60,5 +60,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.AddEventEndpoints();
+app.AddVenueEndpoints();
 
 app.Run();
