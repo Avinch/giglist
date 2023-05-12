@@ -6,14 +6,18 @@ import {
   Group,
   Text,
   Select,
+  LoadingOverlay,
+  Loader,
 } from "@mantine/core";
 import EventList from "../components/event/EventList";
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import VenueService from "../services/VenueService";
 import { useAuth0 } from "@auth0/auth0-react";
 import VenueDto from "../models/IVenueDto";
+import EventService from "../services/EventService";
+import EventDto from "../models/IEventDto";
 
 interface VenueSelectListItem extends React.ComponentPropsWithoutRef<"div"> {
   value: string;
@@ -25,9 +29,14 @@ function Events() {
   const [newEventModalOpen, { open, close }] = useDisclosure(false);
 
   const venueService = new VenueService();
+  const eventService = new EventService();
   const { getAccessTokenSilently } = useAuth0();
 
   const [venueList, setVenueList] = useState<VenueSelectListItem[]>([]);
+
+  const [eventsLoading, setEventsLoading] = useState(true);
+  const [pastEvents, setPastEvents] = useState<EventDto[]>([]);
+  const [futureEvents, setFutureEvents] = useState<EventDto[]>([]);
 
   const onVenueNameChange = async (value: string) => {
     var auth = await getAccessTokenSilently();
@@ -45,6 +54,22 @@ function Events() {
     setVenueList(array);
     console.log("venues", array);
   };
+
+  const getEvents = async () => {
+    setEventsLoading(true);
+    const token = await getAccessTokenSilently();
+
+    const past = await eventService.getEvents(token, "past");
+    const future = await eventService.getEvents(token, "future");
+
+    setPastEvents(past ?? []);
+    setFutureEvents(future ?? []);
+    setEventsLoading(false);
+  };
+
+  useEffect(() => {
+    getEvents();
+  }, []);
 
   const valueItem = forwardRef<HTMLDivElement, VenueSelectListItem>(
     ({ value, venue, ...others }: VenueSelectListItem, ref) => (
@@ -93,11 +118,17 @@ function Events() {
       </Modal>
 
       <div>
-        <Button onClick={() => open()}>New Event</Button>
-        <h1>Upcoming Events</h1>
-        <EventList />
-        <h1>Upcoming Events</h1>
-        <EventList />
+        {eventsLoading ? (
+          <Loader />
+        ) : (
+          <>
+            <Button onClick={() => open()}>New Event</Button>
+            <h1>Upcoming Events</h1>
+            <EventList events={futureEvents} />
+            <h1>Past Events</h1>
+            <EventList events={pastEvents} />
+          </>
+        )}
       </div>
     </>
   );

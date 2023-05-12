@@ -5,18 +5,18 @@ namespace Giglist.Api.Extensions;
 
 public static class MediatrMinimalExtensions
 {
-    public static RouteHandlerBuilder MediateGet<TRequest>(this WebApplication app, string template)
+    public static RouteHandlerBuilder MediateGet<TRequest>(this IEndpointRouteBuilder routeBuilder, string template)
         where TRequest : IHttpRequest
     {
-        return app.MapGet(template,
+        return routeBuilder.MapGet(template,
             async (IMediator mediator, [AsParameters] TRequest request) => 
                 await mediator.Send(request));
     }
     
-    public static RouteHandlerBuilder MediatePost<TRequest>(this WebApplication app, string template)
+    public static RouteHandlerBuilder MediatePost<TRequest>(this IEndpointRouteBuilder routeBuilder, string template)
         where TRequest : IHttpRequest
     {
-        return app.MapPost(template,
+        return routeBuilder.MapPost(template,
             async (IMediator mediator, TRequest request) => 
                 await mediator.Send(request));
     }

@@ -21,20 +21,26 @@ public static class EndpointExtensions
     
     public static WebApplication AddEventEndpoints(this WebApplication app)
     {
-        app.MediateGet<GetAllEventsQuery>("events").RequireAuthorization(AuthorizationPolicies.RequireBasicAuth);
-        app.MediateGet<GetAllEventsQuery>("events/future").RequireAuthorization(AuthorizationPolicies.RequireBasicAuth);
-        app.MediateGet<GetAllEventsQuery>("events/past").RequireAuthorization(AuthorizationPolicies.RequireBasicAuth);
-        app.MediateGet<GetEventByIdQuery>("event/{id}");
+        var group = app.MapGroup("event")
+            .RequireAuthorization(AuthorizationPolicies.RequireBasicAuth);
         
-        app.MediatePost<AddEventCommand>("event").RequireAuthorization(AuthorizationPolicies.RequireBasicAuth);
+        group.MediateGet<GetAllEventsQuery>("");
+        group.MediateGet<GetAllEventsQuery>("future");
+        group.MediateGet<GetAllEventsQuery>("past");
+        group.MediateGet<GetEventByIdQuery>("{id}");
+        
+        group.MediatePost<AddEventCommand>("");
 
         return app;
     }
     
     public static WebApplication AddVenueEndpoints(this WebApplication app)
     {
-        app.MediateGet<GetAllVenuesQuery>("venues").RequireAuthorization(AuthorizationPolicies.RequireBasicAuth);
-        app.MediateGet<SearchVenuesByNameQuery>("venues/search").RequireAuthorization(AuthorizationPolicies.RequireBasicAuth);
+        var group = app.MapGroup("venue")
+            .RequireAuthorization(AuthorizationPolicies.RequireBasicAuth);
+        
+        group.MediateGet<GetAllVenuesQuery>("");
+        group.MediateGet<SearchVenuesByNameQuery>("search");
         
         return app;
     }

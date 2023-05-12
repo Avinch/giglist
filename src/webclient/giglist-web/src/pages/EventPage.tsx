@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import EventDto from "../models/IEventDto";
 import { useAuth0 } from "@auth0/auth0-react";
 import EventService from "../services/EventService";
-import { LoadingOverlay } from "@mantine/core";
+import { Loader, LoadingOverlay } from "@mantine/core";
 
 export default function EventPage() {
   const [event, setEvent] = useState<EventDto>();
@@ -26,7 +26,7 @@ export default function EventPage() {
   }, []);
 
   if (loading) {
-    return <LoadingOverlay visible={true} overlayBlur={2} />;
+    return <Loader />;
   }
 
   return (

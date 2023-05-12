@@ -9,7 +9,7 @@ export default class VenueService {
     authToken: string,
     name: string
   ): Promise<VenueDto[] | undefined> {
-    return await this.get<VenueDto[]>(`venues/search?name=${name}`, authToken);
+    return await this.get<VenueDto[]>(`venue/search?name=${name}`, authToken);
   }
 
   async get<T>(endpoint: string, token: string) {

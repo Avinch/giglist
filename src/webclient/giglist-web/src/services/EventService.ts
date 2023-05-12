@@ -4,8 +4,11 @@ import EventDto from "../models/IEventDto";
 class EventService {
   baseUrl: string = "https://localhost:7052";
 
-  async getEvents(authToken: string): Promise<EventDto[] | undefined> {
-    return await this.get<EventDto[]>("events", authToken);
+  async getEvents(
+    authToken: string,
+    group: string = ""
+  ): Promise<EventDto[] | undefined> {
+    return await this.get<EventDto[]>(`event/${group}`, authToken);
   }
 
   async getEvent(authToken: string, id: string): Promise<EventDto | undefined> {
