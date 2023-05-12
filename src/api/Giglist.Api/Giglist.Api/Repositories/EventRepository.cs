@@ -34,20 +34,40 @@ public class MockEventRepository : IEventRepository
         return model;
     }
 
+    public async Task<IEnumerable<Event>> GetPastEvents()
+    {
+        return _events.Where(x => x.StartDate.Date < DateTime.UtcNow.Date);
+    }
+    
+    public async Task<IEnumerable<Event>> GetFutureEvents()
+    {
+        return _events.Where(x => x.StartDate.Date >= DateTime.UtcNow.Date);
+    }
+
     private void SetupMockData()
     {
         _events.Add(new Event()
         {
             Id = 1,
-            Name = "Event 1",
+            Name = "Event Today",
+            Subtitle = "Tour 1",
             StartDate = DateTime.Today
         });
         
         _events.Add(new Event()
         {
             Id = 2,
-            Name = "Event 2",
+            Name = "Event Yesterday",
+            Subtitle = "Tour 2",
             StartDate = DateTime.Today.AddDays(-1)
+        });
+        
+        _events.Add(new Event()
+        {
+            Id = 3,
+            Name = "Event Tomorrow",
+            Subtitle = "Tour 3",
+            StartDate = DateTime.Today.AddDays(1)
         });
     }
 }

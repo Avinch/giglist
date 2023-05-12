@@ -25,8 +25,10 @@ public static class EndpointExtensions
             .RequireAuthorization(AuthorizationPolicies.RequireBasicAuth);
         
         group.MediateGet<GetAllEventsQuery>("");
-        group.MediateGet<GetAllEventsQuery>("future");
-        group.MediateGet<GetAllEventsQuery>("past");
+        
+        group.MediateGet<GetFutureEventsQuery>("future");
+        group.MediateGet<GetPastEventsQuery>("past");
+        
         group.MediateGet<GetEventByIdQuery>("{id}");
         
         group.MediatePost<AddEventCommand>("");
