@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using Giglist.Api.Extensions;
-using Giglist.Api.Queries;
+using Giglist.Api.Requests;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 

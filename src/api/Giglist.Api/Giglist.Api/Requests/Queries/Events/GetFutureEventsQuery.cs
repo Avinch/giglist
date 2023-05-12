@@ -1,4 +1,4 @@
-﻿namespace Giglist.Api.Queries;
+﻿namespace Giglist.Api.Requests.Queries.Events;
 
 public class GetFutureEventsQuery : IHttpRequest
 {

@@ -1,10 +1,12 @@
-﻿using Giglist.Api.Commands;
-using Giglist.Api.Queries;
+﻿using Giglist.Api.Extensions;
+using Giglist.Api.Requests.Commands.Events;
+using Giglist.Api.Requests.Queries.Events;
+using Giglist.Api.Requests.Queries.Venues;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Giglist.Api.Extensions;
+namespace Giglist.Api.Requests;
 
-public static class EndpointExtensions
+public static class EndpointRegistrations
 {
     private static class AuthorizationPolicies
     {

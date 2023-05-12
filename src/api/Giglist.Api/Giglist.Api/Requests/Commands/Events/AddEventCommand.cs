@@ -1,6 +1,6 @@
-﻿using Giglist.Api.Queries;
+﻿using Giglist.Api.Requests.Queries;
 
-namespace Giglist.Api.Commands;
+namespace Giglist.Api.Requests.Commands.Events;
 
 public class AddEventCommand : IHttpRequest
 {

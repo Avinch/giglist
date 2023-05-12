@@ -1,9 +1,9 @@
 ﻿using Giglist.Api.Mappers;
 using Giglist.Api.Repositories.Interfaces;
+using Giglist.Api.Requests.Queries.Venues;
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace Giglist.Api.Queries.Handlers;
+namespace Giglist.Api.Requests.QueryHandlers.Venues;
 
 public class SearchVenuesByNameHandler : IRequestHandler<SearchVenuesByNameQuery, IResult>
 {

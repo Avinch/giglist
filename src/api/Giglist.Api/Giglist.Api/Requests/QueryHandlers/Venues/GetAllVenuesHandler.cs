@@ -1,8 +1,9 @@
 ﻿using Giglist.Api.Mappers;
 using Giglist.Api.Repositories.Interfaces;
+using Giglist.Api.Requests.Queries.Venues;
 using MediatR;
 
-namespace Giglist.Api.Queries.Handlers;
+namespace Giglist.Api.Requests.QueryHandlers.Venues;
 
 public class GetAllVenuesHandler : IRequestHandler<GetAllVenuesQuery, IResult>
 {

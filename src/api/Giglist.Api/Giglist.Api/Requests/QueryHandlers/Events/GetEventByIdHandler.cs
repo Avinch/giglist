@@ -1,8 +1,9 @@
 ﻿using Giglist.Api.Mappers;
 using Giglist.Api.Repositories.Interfaces;
+using Giglist.Api.Requests.Queries.Events;
 using MediatR;
 
-namespace Giglist.Api.Queries.Handlers;
+namespace Giglist.Api.Requests.QueryHandlers.Events;
 
 public class GetEventByIdHandler : IRequestHandler<GetEventByIdQuery, IResult>
 {    

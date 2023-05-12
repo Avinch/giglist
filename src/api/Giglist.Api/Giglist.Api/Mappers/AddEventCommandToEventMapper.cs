@@ -1,6 +1,6 @@
-﻿using Giglist.Api.Commands;
-using Giglist.Api.Models;
+﻿using Giglist.Api.Models;
 using Giglist.Api.Models.Dto;
+using Giglist.Api.Requests.Commands.Events;
 
 namespace Giglist.Api.Mappers;
 

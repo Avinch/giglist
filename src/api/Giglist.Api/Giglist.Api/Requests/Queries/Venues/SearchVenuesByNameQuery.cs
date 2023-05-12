@@ -1,4 +1,4 @@
-﻿namespace Giglist.Api.Queries;
+﻿namespace Giglist.Api.Requests.Queries.Venues;
 
 public class SearchVenuesByNameQuery : IHttpRequest
 {

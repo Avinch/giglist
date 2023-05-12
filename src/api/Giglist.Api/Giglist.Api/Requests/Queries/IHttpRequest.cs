@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Giglist.Api.Queries;
+namespace Giglist.Api.Requests.Queries;
 
 public interface IHttpRequest : IRequest<IResult>
 {

@@ -1,4 +1,4 @@
-﻿using Giglist.Api.Queries;
+﻿using Giglist.Api.Requests.Queries;
 using MediatR;
 
 namespace Giglist.Api.Extensions;
