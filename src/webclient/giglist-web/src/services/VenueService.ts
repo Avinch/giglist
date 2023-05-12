@@ -1,9 +1,9 @@
 import axios from "axios";
-import EventDto from "../models/IEventDto";
 import VenueDto from "../models/IVenueDto";
+import config from "../config";
 
 export default class VenueService {
-  baseUrl: string = "https://localhost:7052";
+  baseUrl: string = config.apiEndpoint;
 
   async searchVenues(
     authToken: string,

@@ -1,8 +1,9 @@
 import axios from "axios";
 import EventDto from "../models/IEventDto";
+import config from "../config";
 
 class EventService {
-  baseUrl: string = "https://localhost:7052";
+  baseUrl: string = config.apiEndpoint;
 
   async getEvents(
     authToken: string,

@@ -1,6 +1,3 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import { useState, useEffect } from "react";
-import EventService from "../../services/EventService";
 import EventDto from "../../models/IEventDto";
 import EventCard from "./EventCard";
 import { SimpleGrid } from "@mantine/core";
