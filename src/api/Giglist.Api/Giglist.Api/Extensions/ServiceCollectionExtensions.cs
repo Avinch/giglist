@@ -8,18 +8,18 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddSingleton<IEventRepository, MockEventRepository>();
-        services.AddSingleton<IVenueRepository, MockVenueRepository>();
+        services.AddScoped<IEventRepository, EventRepository>();
+        services.AddScoped<IVenueRepository, VenueRepository>();
 
         return services;
     }
 
     public static IServiceCollection AddMappers(this IServiceCollection services)
     {
-        services.AddSingleton<IEventToDtoMapper, EventToDtoMapper>();
-        services.AddSingleton<IAddEventCommandToEventMapper, AddEventCommandToEventMapper>();
+        services.AddScoped<IEventToDtoMapper, EventToDtoMapper>();
+        services.AddScoped<IAddEventCommandToEventMapper, AddEventCommandToEventMapper>();
 
-        services.AddSingleton<IVenueToDtoMapper, VenueToDtoMapper>();
+        services.AddScoped<IVenueToDtoMapper, VenueToDtoMapper>();
         
         return services;
     }

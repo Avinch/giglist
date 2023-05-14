@@ -1,4 +1,5 @@
-﻿using Giglist.Api.Mappers;
+﻿using Giglist.Api.Db;
+using Giglist.Api.Mappers;
 using Giglist.Api.Models;
 using Giglist.Api.Repositories.Interfaces;
 using Giglist.Api.Requests.Queries.Events;
@@ -10,11 +11,13 @@ public class ListEventsHandler : IRequestHandler<ListEventsQuery, IResult>
 {
     private readonly IEventRepository _repo;
     private readonly IEventToDtoMapper _mapper;
+    private readonly DatabaseContext _ctx;
 
-    public ListEventsHandler(IEventRepository repo, IEventToDtoMapper mapper)
+    public ListEventsHandler(IEventRepository repo, IEventToDtoMapper mapper, DatabaseContext ctx)
     {
         _repo = repo;
         _mapper = mapper;
+        _ctx = ctx;
     }
     
     public async Task<IResult> Handle(ListEventsQuery request, CancellationToken cancellationToken)
@@ -22,19 +25,13 @@ public class ListEventsHandler : IRequestHandler<ListEventsQuery, IResult>
         IEnumerable<Event> events;
         var queryType = ParseQueryName(request.Query);
 
-        switch (queryType)
+        events = queryType switch
         {
-            case ListEventQueries.Past:
-                events = await _repo.GetPastEvents();
-                break;
-            case ListEventQueries.Future:
-                events = await _repo.GetFutureEvents();
-                break;
-            default:
-                events = await _repo.GetAllEvents();
-                break;
-        }
-        
+            ListEventQueries.Past => await _repo.GetPastEvents(),
+            ListEventQueries.Future => await _repo.GetFutureEvents(),
+            _ => await _repo.GetAllEvents()
+        };
+
         var dtos = events.Select(ev => _mapper.Map(ev));
         
         return Results.Ok(dtos);

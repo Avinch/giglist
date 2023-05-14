@@ -7,4 +7,5 @@ public class AddEventCommand : IHttpRequest
     public string Name { get; set; }
     public string Subtitle { get; set; }
     public DateTime Start { get; set; }
+    public Guid Venue { get; set; }
 }

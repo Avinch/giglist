@@ -12,7 +12,8 @@ public class AddEventCommandToEventMapper : IAddEventCommandToEventMapper
         {
             Name = input.Name,
             StartDate = input.Start,
-            Subtitle = input.Subtitle
+            Subtitle = input.Subtitle,
+            VenueId = input.Venue
         };
     }
 }

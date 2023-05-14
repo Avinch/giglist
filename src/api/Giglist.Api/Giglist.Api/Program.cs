@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Giglist.Api.Db;
 using Giglist.Api.Extensions;
 using Giglist.Api.Requests;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -41,6 +42,9 @@ builder.Services.AddAuthorizationBuilder().AddAuthPolicies();
 
 builder.Services.AddRepositories();
 builder.Services.AddMappers();
+
+builder.Services.AddOptions<DbOptions>("Db");
+builder.Services.AddDbContext<DatabaseContext>();
 
 var app = builder.Build();
 
