@@ -24,4 +24,9 @@ public class VenueRepository : IVenueRepository
     {
         return await _db.Venues.ToListAsync();
     }
+
+    public async Task<Venue?> GetById(Guid id)
+    {
+        return await _db.Venues.SingleOrDefaultAsync(x => x.Id == id);
+    }
 }

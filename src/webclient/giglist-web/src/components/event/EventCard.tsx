@@ -26,6 +26,7 @@ const cardStyles = createStyles((theme) => ({
 export default function EventCard(props: EventCardProps) {
   const { classes } = cardStyles();
   const navigate = useNavigate();
+  console.log(props.event);
 
   return (
     <Card
@@ -46,13 +47,23 @@ export default function EventCard(props: EventCardProps) {
         ></Image>
       </Card.Section>
 
-      <Group position="apart" mt="md" mb="xs">
+      <Group position="apart" mt="md">
         <Text weight={600}>{props.event.name}</Text>
-        <Badge variant="light">12/34/2022</Badge>
+        <Badge variant="light">
+          {props.event.start && props.event.start.toString()}
+        </Badge>
       </Group>
 
-      <Group mb="xs">
-        <Text weight={500}>{props.event.subtitle}</Text>
+      <Group>
+        <Text weight={500} italic>
+          {props.event.subtitle}
+        </Text>
+      </Group>
+
+      <Group mt="xs">
+        <Text weight={500}>
+          {props.event.venue.name}, {props.event.venue.city}
+        </Text>
       </Group>
     </Card>
   );

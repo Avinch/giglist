@@ -41,6 +41,7 @@ public static class EndpointRegistrations
             .RequireAuthorization(AuthorizationPolicies.RequireBasicAuth);
         
         group.MediateGet<GetAllVenuesQuery>("");
+        group.MediateGet<GetVenueByIdQuery>("{id}");
         group.MediateGet<SearchVenuesByNameQuery>("search");
         
         return app;

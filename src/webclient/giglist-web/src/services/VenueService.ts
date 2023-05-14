@@ -12,6 +12,10 @@ export default class VenueService {
     return await this.get<VenueDto[]>(`venue/search?name=${name}`, authToken);
   }
 
+  async getVenue(authToken: string, id: string): Promise<VenueDto | undefined> {
+    return await this.get<VenueDto>(`venue/${id}`, authToken);
+  }
+
   async get<T>(endpoint: string, token: string) {
     try {
       const { data, status } = await axios.get<T>(

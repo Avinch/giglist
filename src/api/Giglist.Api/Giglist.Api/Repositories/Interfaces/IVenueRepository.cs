@@ -7,4 +7,5 @@ public interface IVenueRepository
 { 
     Task<IEnumerable<Venue>> SearchByName(string name);
     Task<IEnumerable<Venue>> GetAll();
+    Task<Venue?> GetById(Guid id);
 }

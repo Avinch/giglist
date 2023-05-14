@@ -16,7 +16,7 @@ public class EventRepository : IEventRepository
     
     public async Task<IEnumerable<Event>> GetAllEvents()
     {
-        return await _db.Events.ToListAsync();
+        return await _db.Events.Include(x => x.Venue).ToListAsync();
     }
 
     public async Task<Event?> GetEventById(Guid id)
@@ -38,11 +38,11 @@ public class EventRepository : IEventRepository
 
     public async Task<IEnumerable<Event>> GetPastEvents()
     {
-        return await _db.Events.Where(x => x.StartDate.Date < DateTime.UtcNow.Date).ToListAsync();
+        return await _db.Events.Include(x => x.Venue).Where(x => x.StartDate.Date < DateTime.UtcNow.Date).ToListAsync();
     }
     
     public async Task<IEnumerable<Event>> GetFutureEvents()
     {
-        return await _db.Events.Where(x => x.StartDate.Date >= DateTime.UtcNow.Date).ToListAsync();
+        return await _db.Events.Include(x => x.Venue).Where(x => x.StartDate.Date >= DateTime.UtcNow.Date).ToListAsync();
     }
 }

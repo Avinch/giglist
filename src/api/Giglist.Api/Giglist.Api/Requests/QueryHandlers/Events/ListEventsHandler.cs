@@ -1,6 +1,8 @@
-﻿using Giglist.Api.Db;
+﻿using System.Collections;
+using Giglist.Api.Db;
 using Giglist.Api.Mappers;
 using Giglist.Api.Models;
+using Giglist.Api.Models.Dto;
 using Giglist.Api.Repositories.Interfaces;
 using Giglist.Api.Requests.Queries.Events;
 using MediatR;
@@ -32,9 +34,9 @@ public class ListEventsHandler : IRequestHandler<ListEventsQuery, IResult>
             _ => await _repo.GetAllEvents()
         };
 
-        var dtos = events.Select(ev => _mapper.Map(ev));
+        var response = MapResponse(events);
         
-        return Results.Ok(dtos);
+        return Results.Ok(response);
     }
 
     private ListEventQueries? ParseQueryName(string? query)
@@ -45,5 +47,22 @@ public class ListEventsHandler : IRequestHandler<ListEventsQuery, IResult>
         }
 
         return ListEventQueries.All;
+    }
+
+    private IEnumerable<EventDto> MapResponse(IEnumerable<Event> events)
+    {
+        return events.Select(x => new EventDto()
+        {
+            Id = x.Id,
+            Name = x.Name,
+            Subtitle = x.Subtitle,
+            Start = x.StartDate,
+            Venue = new VenueDto()
+            {
+                Name = x.Venue.Name,
+                City = x.Venue.City,
+                VenueId = x.Venue.Id
+            }
+        });
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Giglist.Api.Mappers;
+using Giglist.Api.Models;
+using Giglist.Api.Models.Dto;
 using Giglist.Api.Repositories.Interfaces;
 using Giglist.Api.Requests.Queries.Events;
 using MediatR;
@@ -25,8 +27,23 @@ public class GetEventByIdHandler : IRequestHandler<GetEventByIdQuery, IResult>
             return Results.NotFound();
         }
 
-        var dto = _mapper.Map(result);
+        var response = MapResponse(result);
         
-        return Results.Ok(dto);
+        return Results.Ok(response);
+    }
+
+    private EventDto MapResponse(Event ev)
+    {
+        return new EventDto()
+        {
+            Id = ev.Id,
+            Name = ev.Name,
+            Subtitle = ev.Subtitle,
+            Start = ev.StartDate,
+            Venue = new VenueDto()
+            {
+                VenueId = ev.VenueId
+            }
+        };
     }
 }

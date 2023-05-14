@@ -11,9 +11,12 @@ export default function EventList(props: IEventListProps) {
     return (
       <>
         <SimpleGrid cols={5} spacing={"xl"}>
-          {props.events.map((item) => (
-            <EventCard event={item} />
-          ))}
+          {props.events
+            // fucking dates
+            //.sort((a, b) => a.start.getDate() - b.start.getDate())
+            .map((item) => (
+              <EventCard event={item} />
+            ))}
         </SimpleGrid>
       </>
     );

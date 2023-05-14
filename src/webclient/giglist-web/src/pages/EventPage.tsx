@@ -4,12 +4,16 @@ import EventDto from "../models/IEventDto";
 import { useAuth0 } from "@auth0/auth0-react";
 import EventService from "../services/EventService";
 import { Loader, LoadingOverlay } from "@mantine/core";
+import VenueDto from "../models/IVenueDto";
+import VenueService from "../services/VenueService";
 
 export default function EventPage() {
   const [event, setEvent] = useState<EventDto>();
+  const [venue, setVenue] = useState<VenueDto>();
   const [loading, setLoading] = useState(true);
   const { eventId } = useParams();
-  const service = new EventService();
+  const eventService = new EventService();
+  const venueService = new VenueService();
   const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
@@ -17,8 +21,17 @@ export default function EventPage() {
       const token = await getAccessTokenSilently();
 
       if (eventId) {
-        const returned = await service.getEvent(token, eventId);
+        const returned = await eventService.getEvent(token, eventId);
         setEvent(returned);
+
+        if (returned) {
+          const venue = await venueService.getVenue(
+            token,
+            returned.venue.venueId
+          );
+          setVenue(venue);
+        }
+
         setLoading(false);
       }
     };
@@ -32,9 +45,12 @@ export default function EventPage() {
   return (
     <div>
       {event ? (
-        <h3>
-          {event.name} {event.subtitle && <>({event.subtitle})</>}
-        </h3>
+        <div>
+          <h3>
+            {event.name} {event.subtitle && <>({event.subtitle})</>}
+          </h3>
+          <h5>{venue?.name}</h5>
+        </div>
       ) : (
         <h3>Error</h3>
       )}
