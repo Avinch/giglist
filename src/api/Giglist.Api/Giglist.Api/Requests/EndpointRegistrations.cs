@@ -26,10 +26,7 @@ public static class EndpointRegistrations
         var group = app.MapGroup("event")
             .RequireAuthorization(AuthorizationPolicies.RequireBasicAuth);
         
-        group.MediateGet<GetAllEventsQuery>("");
-        
-        group.MediateGet<GetFutureEventsQuery>("future");
-        group.MediateGet<GetPastEventsQuery>("past");
+        group.MediateGet<ListEventsQuery>("");
         
         group.MediateGet<GetEventByIdQuery>("{id}");
         

@@ -5,11 +5,11 @@ import config from "../config";
 class EventService {
   baseUrl: string = config.apiEndpoint;
 
-  async getEvents(
+  async listEvents(
     authToken: string,
-    group: string = ""
+    query: "all" | "future" | "past" = "all"
   ): Promise<EventDto[] | undefined> {
-    return await this.get<EventDto[]>(`event/${group}`, authToken);
+    return await this.get<EventDto[]>(`event?query=${query}`, authToken);
   }
 
   async getEvent(authToken: string, id: string): Promise<EventDto | undefined> {

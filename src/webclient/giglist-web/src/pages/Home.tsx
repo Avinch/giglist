@@ -109,8 +109,8 @@ function Events() {
       setEventsLoading(true);
       const token = await getAccessTokenSilently();
 
-      const past = await eventService.getEvents(token, "past");
-      const future = await eventService.getEvents(token, "future");
+      const past = await eventService.listEvents(token, "past");
+      const future = await eventService.listEvents(token, "future");
 
       setPastEvents(past ?? []);
       setFutureEvents(future ?? []);
