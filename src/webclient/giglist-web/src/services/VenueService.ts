@@ -24,6 +24,8 @@ export default class VenueService {
       if (status === 200) {
         return data;
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

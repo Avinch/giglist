@@ -16,6 +16,10 @@ class EventService {
     return await this.get<EventDto>(`event/${id}`, authToken);
   }
 
+  async insertEvent(authToken: string, body: any): Promise<boolean> {
+    return await this.post(`event`, authToken, body);
+  }
+
   async get<T>(endpoint: string, token: string) {
     try {
       const { data, status } = await axios.get<T>(
@@ -29,6 +33,22 @@ class EventService {
         return data;
       }
     } catch (err) {}
+  }
+
+  async post(endpoint: string, token: string, body: any): Promise<boolean> {
+    try {
+      const { status } = await axios.post(`${this.baseUrl}/${endpoint}`, body, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (status === 200) {
+        return true;
+      }
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+    return false;
   }
 }
 

@@ -8,9 +8,10 @@ import {
   Select,
   LoadingOverlay,
   Loader,
+  SimpleGrid,
 } from "@mantine/core";
 import EventList from "../components/event/EventList";
-import { forwardRef, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, forwardRef, useEffect, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import VenueService from "../services/VenueService";
@@ -18,6 +19,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import VenueDto from "../models/IVenueDto";
 import EventService from "../services/EventService";
 import EventDto from "../models/IEventDto";
+import { DatePickerInput, DateValue } from "@mantine/dates";
 
 interface VenueSelectListItem extends React.ComponentPropsWithoutRef<"div"> {
   value: string;
@@ -25,8 +27,29 @@ interface VenueSelectListItem extends React.ComponentPropsWithoutRef<"div"> {
   label: string;
 }
 
+interface NewEventSubmitDetails {
+  name: string;
+  venue: string;
+  subitle: string;
+  start: Date;
+}
+
 function Events() {
   const [newEventModalOpen, { open, close }] = useDisclosure(false);
+  const [newEventFormState, setNewEventFormState] = useState(
+    {} as NewEventSubmitDetails
+  );
+
+  const [forceLoadEvents, setForceLoadEvents] = useState(1); // surely better way of doing this?
+
+  const handleNewEventSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log("submit:", newEventFormState);
+    let token = await getAccessTokenSilently();
+    eventService.insertEvent(token, newEventFormState);
+    close();
+    setForceLoadEvents(forceLoadEvents + 1);
+  };
 
   const venueService = new VenueService();
   const eventService = new EventService();
@@ -52,24 +75,50 @@ function Events() {
       array.push(selectItem);
     });
     setVenueList(array);
-    console.log("venues", array);
   };
 
-  const getEvents = async () => {
-    setEventsLoading(true);
-    const token = await getAccessTokenSilently();
+  const onVenueSelect = (value: string | null) => {
+    if (value === null) return;
 
-    const past = await eventService.getEvents(token, "past");
-    const future = await eventService.getEvents(token, "future");
+    console.log("venue change", {
+      value: value,
+    });
 
-    setPastEvents(past ?? []);
-    setFutureEvents(future ?? []);
-    setEventsLoading(false);
+    setNewEventFormState((prev) => ({
+      ...prev,
+      venue: value,
+    }));
   };
+
+  function onTextFormChange(event: ChangeEvent<HTMLInputElement>): void {
+    const { name, value } = event.target;
+
+    console.log("text change", {
+      inputName: name,
+      value: value,
+    });
+
+    setNewEventFormState((prevProps) => ({
+      ...prevProps,
+      [name]: value,
+    }));
+  }
 
   useEffect(() => {
+    const getEvents = async () => {
+      setEventsLoading(true);
+      const token = await getAccessTokenSilently();
+
+      const past = await eventService.getEvents(token, "past");
+      const future = await eventService.getEvents(token, "future");
+
+      setPastEvents(past ?? []);
+      setFutureEvents(future ?? []);
+      setEventsLoading(false);
+    };
+
     getEvents();
-  }, []);
+  }, [forceLoadEvents]);
 
   const valueItem = forwardRef<HTMLDivElement, VenueSelectListItem>(
     ({ value, venue, ...others }: VenueSelectListItem, ref) => (
@@ -86,6 +135,19 @@ function Events() {
     )
   );
 
+  function onDatePickerChange(value: DateValue): void {
+    if (value === null) return;
+
+    console.log("date change", {
+      value: value,
+    });
+
+    setNewEventFormState((prev) => ({
+      ...prev,
+      start: value,
+    }));
+  }
+
   return (
     <>
       <Modal
@@ -94,26 +156,48 @@ function Events() {
         title="New Event"
         centered
       >
-        <form>
-          <TextInput withAsterisk label="Name"></TextInput>
-          <TextInput withAsterisk label="Subtitle"></TextInput>
-          <Select
-            label="Venue"
-            placeholder="Pick one"
-            data={venueList}
-            onSearchChange={(value) => {
-              if (value) {
-                onVenueNameChange(value);
-              }
-            }}
-            searchable
-            nothingFound="No Venues Found"
-            itemComponent={valueItem}
-            limit={3}
-            clearable
-            filter={(value, item) => true}
-          ></Select>
-          <Button type="submit">Submit</Button>
+        <form onSubmit={handleNewEventSubmit}>
+          <SimpleGrid cols={1} verticalSpacing={"xl"}>
+            <TextInput
+              withAsterisk
+              label="Name"
+              name="name"
+              onChange={onTextFormChange}
+            ></TextInput>
+            <TextInput
+              withAsterisk
+              label="Subtitle"
+              name="subtitle"
+              onChange={onTextFormChange}
+            ></TextInput>
+            <Select
+              name="venue"
+              label="Venue"
+              placeholder="Pick one"
+              data={venueList}
+              onChange={onVenueSelect}
+              onSearchChange={(value) => {
+                if (value) {
+                  onVenueNameChange(value);
+                }
+              }}
+              searchable
+              nothingFound="No Venues Found"
+              itemComponent={valueItem}
+              limit={3}
+              clearable
+              withAsterisk
+              filter={(value, item) => true}
+            ></Select>
+            <DatePickerInput
+              onChange={onDatePickerChange}
+              name="date"
+              label="Date"
+              size="xs"
+              withAsterisk
+            ></DatePickerInput>
+            <Button type="submit">Submit</Button>
+          </SimpleGrid>
         </form>
       </Modal>
 
